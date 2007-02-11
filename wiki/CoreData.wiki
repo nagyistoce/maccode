@@ -1,0 +1,5 @@
+#Core Data code snippets
+
+= Introduction =
+
+This page is the beginning of the Core Data code snippets.  The first one is a section of code that will facilitate migrating from one repository to another.
