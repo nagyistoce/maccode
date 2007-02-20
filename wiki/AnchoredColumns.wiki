@@ -1,4 +1,4 @@
-#summary NSTableView columns that don't sink.
+#summary NSTableView columns that don't drift out to sea.
 
 = Introduction =
 
