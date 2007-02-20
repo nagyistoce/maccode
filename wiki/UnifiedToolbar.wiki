@@ -1,0 +1,7 @@
+#summary A toolbar like Mail.app.
+
+= Introduction =
+
+Unified Toolbar allows you to implement pill bar style toolbars in your app
+
+
