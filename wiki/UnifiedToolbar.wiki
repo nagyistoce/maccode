@@ -1,7 +1,6 @@
-#summary A toolbar like Mail.app.
+#summary Allows conjoined toolbar buttons as used in Tiger's Mail.
 
 = Introduction =
 
-Unified Toolbar allows you to implement pill bar style toolbars in your app
-
+Unified Toolbar allows you to implement pill-style connected toolbar buttons.
 
