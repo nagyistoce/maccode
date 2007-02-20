@@ -1,0 +1,9 @@
+#summary weeklycocoa is the source hosting for the Weekly Cocoa App Challenge.
+
+= Introduction =
+
+For more info:
+
+http://brok3n.org/weeklycocoa.html
+
+
