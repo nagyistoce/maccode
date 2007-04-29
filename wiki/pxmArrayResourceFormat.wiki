@@ -65,4 +65,4 @@ If the pixel format is indexed-color (`pixelType` is `pxmTypeIndexed`), we presu
 
 pxmLib used to call the `singleMask` member in the bitfield `maskCount`, and provided constants named `pxmSingleMask` and `pxmMultiMask` for it. We have chosen to deprecate the constants, and construe the field as a Boolean choice. We made this decision because we are of the opinion that calling it `maskCount` implies that it will actually count off the masks, which it does not do—in other words, that calling it that is misleading.
 
-As of this writing, pxmLib does not currently handle custom 'clut' specifications. For that matter, it doesn't do anything with the 'clut' at all.
+As of this writing, pxmLib does not handle custom 'clut' specifications. For that matter, it doesn't do anything with the 'clut' at all.
