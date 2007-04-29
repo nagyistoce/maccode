@@ -3,7 +3,7 @@
 
 = What a pxm# is not =
 
-While “pxm” can be reasonably assumed to mean “pixmap”, it does not mean [http://developer.apple.com/documentation/Carbon/Reference/QuickDraw_Ref/Reference/reference.html#//apple_ref/c/tdef/PixMap PixMap] in the QuickDraw sense. They are separate formats.
+While “pxm” can be reasonably assumed to mean “pixmap”, it does not mean [http://developer.apple.com/documentation/Carbon/Reference/!QuickDraw_Ref/Reference/reference.html#//apple_ref/c/tdef/PixMap PixMap] in the !QuickDraw sense. They are separate formats.
 
 = What a pxm# is =
 
@@ -15,11 +15,11 @@ As usual, the # in the resource type indicates that the resource contains an arr
 
 Pixels can be in any of the following formats:
 
-  * pxmTypeIndexed (8): Indexed-color, 8-bit
-  * pxmTypeDirect16 (16): Direct pixels, 16-bit
-  * pxmTypeDirect32 (32): Direct pixels, 32-bit RGBA
+  * `pxmTypeIndexed` (8): Indexed-color, 8-bit
+  * `pxmTypeDirect16` (16): Direct pixels, 16-bit
+  * `pxmTypeDirect32` (32): Direct pixels, 32-bit RGBA
 
-We don't know what pixels look like in 16-bit mode. We can assume that they are RGB, but we don't know whether they are 555 or 565. Conclusions cannot be borrowed from QuickDraw: 32-bit Color QuickDraw ordinarily uses ARGB, whereas 'pxm#' resources use RGBA.
+We don't know what pixels look like in 16-bit mode. We can assume that they are RGB, but we don't know whether they are 555 or 565. Conclusions cannot be borrowed from !QuickDraw: 32-bit Color !QuickDraw ordinarily uses ARGB, whereas 'pxm#' resources use RGBA.
 
 32-bit mode can be with or without alpha. So far, in looking at Tiger's resources, we have only encountered graphics with alpha, even when their coverage has no holes. Therefore, the layout of components in no-alpha 'pxm#' graphics is unknown.
 
@@ -37,29 +37,29 @@ pxmLib uses a structure called `struct pxmData` to interpret the contents of a '
 
 The structure contains the following fields:
 
-  # version: As of both Panther and Tiger, always 3.
-  # bitfield:
-    # __empty: 11 bits. Never used.
-    # chaos: 1 bit. Never used.
-    # mystery: 1 bit. Spotted set in Extras.rsrc#2062 (Tiger).
-    # hasAlpha: 1 bit. Seems to always be set in Tiger.
-    # __unknown1: 1 bit. Never used.
-    # singleMask: 1 bit. Indicates whether the image has exactly one click-mask for all images, or one mask _per_ image.
-  # bounds: QuickDraw Rect. Ramifications of a non-zero-origin rectangle are unknown.
-  # pixelSize: Number of bits per pixel.
-  # pixelType: Number of bits per component. pxmTypeIndexed means indexed-color. See “Graphics formats” above.
-  # clutAddr: Pointer to a [http://developer.apple.com/documentation/mac/quickdraw/QuickDraw-267.html 'clut' (color look-up table) resource]. Probably not safe to use fresh off the disk; should be filled in after reading by looking up the resource by its ID (see “clutID”, the next field).
-  # clutID: Resource ID of a 'clut' resource.
-  # imageCount: Number of frames in the image. If singleMask is 0, this is also the number of masks in the image.
-  # data: All mask and image data.
+  # `version`: As of both Panther and Tiger, always 3.
+  # `bitfield`:
+    # `__empty`: 11 bits. Never used.
+    # `chaos`: 1 bit. Never used.
+    # `mystery`: 1 bit. Spotted set in Extras.rsrc#2062 (Tiger).
+    # `hasAlpha`: 1 bit. Seems to always be set in Tiger.
+    # `__unknown1`: 1 bit. Never used.
+    # `singleMask`: 1 bit. Indicates whether the image has exactly one click-mask for all images, or one mask _per_ image.
+  # `bounds`: !QuickDraw Rect. Ramifications of a non-zero-origin rectangle are unknown.
+  # `pixelSize`: Number of bits per pixel.
+  # `pixelType`: Number of bits per component. `pxmTypeIndexed` means indexed-color. See “Graphics formats” above.
+  # `clutAddr`: Pointer to a [http://developer.apple.com/documentation/mac/!QuickDraw/!QuickDraw-267.html 'clut' (color look-up table) resource]. Probably not safe to use fresh off the disk; should be filled in after reading by looking up the resource by its ID (see `clutID`, the next field).
+  # `clutID`: Resource ID of a 'clut' resource.
+  # `imageCount`: Number of frames in the image. If `singleMask` is 0, this is also the number of masks in the image.
+  # `data`: All mask and image data.
 
 == Format of image data ==
 
-First are the masks: either imageCount of them (if singleMask is 0), or exactly one (if singleMask is 1). These are 1-bit-per-pixel images, regardless of the pixel format specified by pixelSize and pixelType. Presumably, they are used for hit-testing: you would map the mouse location to an index, then test the bit at that index for whether it's considered part of the control.
+First are the masks: either `imageCount` of them (if `singleMask` is 0), or exactly one (if `singleMask` is 1). These are 1-bit-per-pixel images, regardless of the pixel format specified by `pixelSize` and `pixelType`. Presumably, they are used for hit-testing: you would map the mouse location to an index, then test the bit at that index for whether it's considered part of the control.
 
-After the masks come the actual image frames. The size and format of the pixels in these images are defined by pixelSize and pixelType, respectively. All frames in a given resource have the same pixel size and format. Despite the use of the word “frame”, a 'pxm#' is not necessarily (nor even usually) an animation.
+After the masks come the actual image frames. The size and format of the pixels in these images are defined by `pixelSize` and `pixelType`, respectively. All frames in a given resource have the same pixel size and format. Despite the use of the word “frame”, a 'pxm#' is not necessarily (nor even usually) an animation.
 
-If the pixel format is indexed-color (pixelType is pxmTypeIndexed), we presume that colors should be looked up using the 'clut' resource indicated by the clutID field.
+If the pixel format is indexed-color (`pixelType` is `pxmTypeIndexed`), we presume that colors should be looked up using the 'clut' resource indicated by the `clutID` field.
 
 = Implementation notes =
 
