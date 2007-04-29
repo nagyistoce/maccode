@@ -1,5 +1,5 @@
 #summary Anatomy of a 'pxm#' resource.
-#labels pxmLib resource format
+#labels pxmLib, resource, format
 
 = What a pxm# is not =
 
