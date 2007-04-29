@@ -3,7 +3,7 @@
 
 = What a pxm# is not =
 
-While “pxm” can be reasonably assumed to mean “pixmap”, it does not mean [http://developer.apple.com/documentation/Carbon/Reference/!QuickDraw_Ref/Reference/reference.html#//apple_ref/c/tdef/PixMap PixMap] in the !QuickDraw sense. They are separate formats.
+While “pxm” can be reasonably assumed to mean “pixmap”, it does not mean [http://developer.apple.com/documentation/Carbon/Reference/QuickDraw_Ref/Reference/reference.html#//apple_ref/c/tdef/PixMap PixMap] in the !QuickDraw sense. They are separate formats.
 
 = What a pxm# is =
 
@@ -48,7 +48,7 @@ The structure contains the following fields:
   # `bounds`: !QuickDraw Rect. Ramifications of a non-zero-origin rectangle are unknown.
   # `pixelSize`: Number of bits per pixel.
   # `pixelType`: Number of bits per component. `pxmTypeIndexed` means indexed-color. See “Graphics formats” above.
-  # `clutAddr`: Pointer to a [http://developer.apple.com/documentation/mac/!QuickDraw/!QuickDraw-267.html 'clut' (color look-up table) resource]. Probably not safe to use fresh off the disk; should be filled in after reading by looking up the resource by its ID (see `clutID`, the next field).
+  # `clutAddr`: Pointer to a [http://developer.apple.com/documentation/mac/QuickDraw/QuickDraw-267.html 'clut' (color look-up table) resource]. Probably not safe to use fresh off the disk; should be filled in after reading by looking up the resource by its ID (see `clutID`, the next field).
   # `clutID`: Resource ID of a 'clut' resource.
   # `imageCount`: Number of frames in the image. If `singleMask` is 0, this is also the number of masks in the image.
   # `data`: All mask and image data.
