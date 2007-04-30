@@ -27,7 +27,9 @@ Note: The pixel format for any one 'pxm#' resource applies to all the images the
 
 = Architectural notes =
 
-All data in a 'pxm#' resource—the header, the masks, and the image data—is big-endian.
+The header in a 'pxm#' resource is in native byte-order; the mask and pixel data in a 'pxm#' resource is big-endian.
+
+On Tiger, HIToolbox.framework contains two files, Extras.rsrc and Extras2.rsrc, which are identical in all respects other than the byte-order of their header (Extras.rsrc is big-endian, whereas Extras2.rsrc is little-endian). Testing byte-order is fairly simple: The `version` field's high byte will be zero if the header is big-endian, or non-zero if the header is little-endian.
 
 Alignment follows the rules for the 68000 processor family.
 
