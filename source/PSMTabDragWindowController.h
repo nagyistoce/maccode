@@ -17,7 +17,7 @@
 @interface PSMTabDragWindowController : NSWindowController {
 	PSMTabBarTearOffStyle _tearOffStyle;
 	PSMTabDragView *_view;
-	NSAnimation *_animation;
+	NSObject *_animation;
 	NSTimer *_timer;
 	
 	BOOL _showingAlternate;

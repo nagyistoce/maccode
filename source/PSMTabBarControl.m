@@ -18,6 +18,12 @@
 #import "PSMTabDragAssistant.h"
 #import "PSMTabBarController.h"
 
+@interface NSObject (Hackfor103)
+- (float)currentProgress;
+- (void)startAnimation;
+- (void)setAnimationBlockingMode:(int)mode;
+@end
+
 @interface PSMTabBarControl (Private)
 
     // constructor/destructor
@@ -989,7 +995,7 @@
 		[_animationTimer release]; _animationTimer = nil;
 	}	
 
-    if (animate) {
+    if (animate && NSClassFromString(@"NSAnimation")) {
         NSMutableArray *targetFrames = [NSMutableArray arrayWithCapacity:[_cells count]];
         
         for (int i = 0; i < [_cells count]; i++) {
@@ -1000,8 +1006,22 @@
         }
         
         [_addTabButton setHidden:!_showAddTabButton];
-        
-        NSAnimation *animation = [[NSAnimation alloc] initWithDuration:0.50 animationCurve:NSAnimationEaseInOut];
+
+#ifndef NSAnimationCurve
+		typedef enum {
+			NSAnimationEaseInOut,       // default
+			NSAnimationEaseIn,
+			NSAnimationEaseOut,
+			NSAnimationLinear
+		} NSAnimationCurve;
+		
+		typedef enum {
+			NSAnimationBlocking,
+			NSAnimationNonblocking,
+			NSAnimationNonblockingThreaded
+		} NSAnimationBlockingMode;
+#endif
+        id animation = [[NSClassFromString(@"NSAnimation") alloc] initWithDuration:0.50 animationCurve:NSAnimationEaseInOut];
         [animation setAnimationBlockingMode:NSAnimationNonblocking];
         [animation startAnimation];
         _animationTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 / 30.0
@@ -1031,7 +1051,7 @@
 
 - (void)_animateCells:(NSTimer *)timer
 {
-    NSAnimation *animation = [[timer userInfo] objectAtIndex:1];
+    id animation = [[timer userInfo] objectAtIndex:1];
 	NSArray *targetFrames = [[timer userInfo] objectAtIndex:0];
     PSMTabBarCell *currentCell;
 	int cellCount = [_cells count];
@@ -1043,7 +1063,7 @@
 			NSRect cellFrame = [currentCell frame], targetFrame = [[targetFrames objectAtIndex:i] rectValue];
 			float sizeChange;
 			float originChange;
-			
+
 			if ([self orientation] == PSMTabBarHorizontalOrientation) {
 				sizeChange = (targetFrame.size.width - cellFrame.size.width) * [animation currentProgress];
 				originChange = (targetFrame.origin.x - cellFrame.origin.x) * [animation currentProgress];

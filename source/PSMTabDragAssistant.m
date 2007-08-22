@@ -13,6 +13,13 @@
 
 #define PI 3.1417
 
+@interface NSObject (Hackfor103)
+- (float)currentProgress;
+- (float)currentValue;
+- (void)startAnimation;
+- (void)setAnimationBlockingMode:(int)mode;
+@end
+
 @interface PSMTabBarControl (Private)
 - (void)update:(BOOL)animate;
 @end
@@ -624,7 +631,9 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	NSImage *image = [[[NSImage alloc] initWithSize:rect.size] autorelease];
 	[image lockFocus];
 	rect.origin = NSZeroPoint;
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
 	CGContextCopyWindowCaptureContentsToRect([[NSGraphicsContext currentContext] graphicsPort], *(CGRect *)&rect, [NSApp contextID], [window windowNumber], 0);
+#endif
 	[image unlockFocus];
 	
 	return image;
@@ -637,18 +646,34 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	[window setAlphaValue:0.0];
 	[window makeKeyAndOrderFront:nil];
 	
-	NSAnimation *animation = [[NSAnimation alloc] initWithDuration:0.25 animationCurve:NSAnimationEaseInOut];
-	[animation setAnimationBlockingMode:NSAnimationNonblocking];
-	[animation setCurrentProgress:0.1];
-	[animation startAnimation];
-	NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / 30.0 target:self selector:@selector(_expandWindowTimerFired:) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:window, @"Window", animation, @"Animation", nil] repeats:YES];
-	[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
+	if (NSClassFromString(@"NSAnimation")) {
+#ifndef NSAnimationCurve
+		typedef enum {
+			NSAnimationEaseInOut,       // default
+			NSAnimationEaseIn,
+			NSAnimationEaseOut,
+			NSAnimationLinear
+		} NSAnimationCurve;
+		
+		typedef enum {
+			NSAnimationBlocking,
+			NSAnimationNonblocking,
+			NSAnimationNonblockingThreaded
+		} NSAnimationBlockingMode;
+#endif
+		id animation = [[NSClassFromString(@"NSAnimation") alloc] initWithDuration:0.25 animationCurve:NSAnimationEaseInOut];
+		[animation setAnimationBlockingMode:NSAnimationNonblocking];
+		[animation setCurrentProgress:0.1];
+		[animation startAnimation];
+		NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0 / 30.0 target:self selector:@selector(_expandWindowTimerFired:) userInfo:[NSDictionary dictionaryWithObjectsAndKeys:window, @"Window", animation, @"Animation", nil] repeats:YES];
+		[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSEventTrackingRunLoopMode];
+	}
 }
 
 - (void)_expandWindowTimerFired:(NSTimer *)timer
 {
 	NSWindow *window = [[timer userInfo] objectForKey:@"Window"];
-	NSAnimation *animation = [[timer userInfo] objectForKey:@"Animation"];
+	NSObject *animation = [[timer userInfo] objectForKey:@"Animation"];
 	CGAffineTransform transform;
 	NSPoint translation;
 	NSRect winFrame = [window frame];
