@@ -10,6 +10,13 @@
 #import "PSMTabDragWindow.h"
 #import "PSMTabDragView.h"
 
+@interface NSObject (Hackfor103)
+- (float)currentProgress;
+- (float)currentValue;
+- (void)startAnimation;
+- (void)setAnimationBlockingMode:(int)mode;
+@end
+
 @implementation PSMTabDragWindowController
 
 - (id)initWithImage:(NSImage *)image styleMask:(unsigned int)styleMask tearOffStyle:(PSMTabBarTearOffStyle)tearOffStyle
@@ -80,7 +87,21 @@
 	}
 	
 	//begin animating
-	_animation = [[NSAnimation alloc] initWithDuration:0.25 animationCurve:NSAnimationEaseInOut];
+#ifndef NSAnimationCurve
+	typedef enum {
+		NSAnimationEaseInOut,       // default
+		NSAnimationEaseIn,
+		NSAnimationEaseOut,
+		NSAnimationLinear
+	} NSAnimationCurve;
+	
+	typedef enum {
+		NSAnimationBlocking,
+		NSAnimationNonblocking,
+		NSAnimationNonblockingThreaded
+	} NSAnimationBlockingMode;
+#endif
+	_animation = [[NSClassFromString(@"NSAnimation") alloc] initWithDuration:0.25 animationCurve:NSAnimationEaseInOut];
 	[_animation setAnimationBlockingMode:NSAnimationNonblocking];
 	[_animation setCurrentProgress:progress];
 	[_animation startAnimation];

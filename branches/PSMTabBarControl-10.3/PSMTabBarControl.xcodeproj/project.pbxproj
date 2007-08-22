@@ -257,7 +257,7 @@
 		A251BE8C0959A1EA0058BC7F /* FakeModel.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = FakeModel.m; path = source/FakeModel.m; sourceTree = "<group>"; };
 		A251BE8D0959A1EA0058BC7F /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = main.m; path = source/main.m; sourceTree = "<group>"; };
 		A251BE9B0959A2530058BC7F /* ReadMe.rtfd */ = {isa = PBXFileReference; lastKnownFileType = wrapper.rtfd; path = ReadMe.rtfd; sourceTree = "<group>"; };
-		A251BEA00959BB5B0058BC7F /* TabBarControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabBarControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A251BEA00959BB5B0058BC7F /* TabBarControlDemo.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TabBarControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A251BEA20959BB5B0058BC7F /* TabBarControlDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "TabBarControlDemo-Info.plist"; sourceTree = "<group>"; };
 		A251BEC30959BC0E0058BC7F /* MainMenu.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = MainMenu.nib; sourceTree = "<group>"; };
 		A268EA5F09A9831800E082AA /* PSMRolloverButton.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = PSMRolloverButton.h; path = source/PSMRolloverButton.h; sourceTree = "<group>"; };
@@ -1013,7 +1013,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
 			};
 			name = Debug;
 		};
@@ -1029,8 +1030,8 @@
 				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.3;
 				PREBINDING = NO;
-				SDKROOT_PPC = /Developer/SDKs/MacOSX10.3.9.sdk;
 				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.3.9.sdk;
 			};
 			name = Release;
 		};

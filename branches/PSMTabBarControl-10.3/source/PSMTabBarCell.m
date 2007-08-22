@@ -498,10 +498,12 @@
 	return actions;
 }
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
 - (NSString *)accessibilityActionDescription:(NSString *)action
 {
 	return NSAccessibilityActionDescription(action);
 }
+#endif
 	
 - (void)accessibilityPerformAction:(NSString *)action {
 	if ([action isEqualToString:NSAccessibilityPressAction]) {
