@@ -11,6 +11,7 @@
 #import "PSMTabStyle.h"
 #import "PSMProgressIndicator.h"
 #import "PSMTabDragAssistant.h"
+#import <AvailabilityMacros.h>
 
 @interface PSMTabBarControl (Private)
 - (void)update;
@@ -498,7 +499,7 @@
 	return actions;
 }
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_4
 - (NSString *)accessibilityActionDescription:(NSString *)action
 {
 	return NSAccessibilityActionDescription(action);

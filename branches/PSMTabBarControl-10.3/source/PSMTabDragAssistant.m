@@ -10,6 +10,7 @@
 #import "PSMTabBarCell.h"
 #import "PSMTabStyle.h"
 #import "PSMTabDragWindowController.h"
+#import <AvailabilityMacros.h>
 
 #define PI 3.1417
 
@@ -631,7 +632,7 @@ static PSMTabDragAssistant *sharedDragAssistant = nil;
 	NSImage *image = [[[NSImage alloc] initWithSize:rect.size] autorelease];
 	[image lockFocus];
 	rect.origin = NSZeroPoint;
-#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_4
+#if MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_4
 	CGContextCopyWindowCaptureContentsToRect([[NSGraphicsContext currentContext] graphicsPort], *(CGRect *)&rect, [NSApp contextID], [window windowNumber], 0);
 #endif
 	[image unlockFocus];
