@@ -9,7 +9,7 @@ So I started MacCode the next day. We moved PSMTabBarControl and the UnifiedTool
 
 = How does MacCode work =
 
-Here are the general principals behind MacCode:
+Here are the general principles behind MacCode:
   * Getting a large amount of code for perusal offline should be *simple*.
   * It should be easy to get updates to all of the code you have checked out.
   * You should not have to look for hours to find the code you need.
